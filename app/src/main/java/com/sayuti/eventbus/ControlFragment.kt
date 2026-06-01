@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.sayuti.eventbus.databinding.FragmentControlBinding
+import org.greenrobot.eventbus.EventBus
 
 class ControlFragment : Fragment(R.layout.fragment_control) {
 
-    var listener: CounterListener? = null // di-set dari MainActivity
+    // ga ada listener sama sekali
     private var counter = 0
 
     private var _binding: FragmentControlBinding? = null
@@ -19,12 +20,12 @@ class ControlFragment : Fragment(R.layout.fragment_control) {
 
         binding.btnIncrement.setOnClickListener {
             counter++
-            listener?.onCounterChanged(counter)
+            EventBus.getDefault().post(CounterEvent(counter))
         }
 
         binding.btnDecrement.setOnClickListener {
             counter--
-            listener?.onCounterChanged(counter)
+            EventBus.getDefault().post(CounterEvent(counter))
         }
     }
 
